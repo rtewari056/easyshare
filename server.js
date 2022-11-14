@@ -2,9 +2,11 @@ import express from "express";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
+import cron from "node-cron";
 
 import connectToMongoDB from "./config/connectToMongoDB.js";
 import { fileRoutes, showRoutes, downloadRoutes } from "./routes/index.js";
+import cronScript from "./config/cronScript.js";
 
 const PORT = process.env.PORT || 5002;
 
@@ -13,6 +15,11 @@ app.use(express.static("public"));
 app.use(express.json());
 dotenv.config();
 connectToMongoDB(); // Connect to Database
+
+// CRON Job to remove files from upload folder and data from database everyday at midnight 
+cron.schedule("0 0 * * *", () => {
+  cronScript();
+});
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url)); // The __dirname or __filename global variables are not available in ECMAScript module files.
 
