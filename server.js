@@ -3,6 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import cron from "node-cron";
+import cors from "cors";
 
 import connectToMongoDB from "./config/connectToMongoDB.js";
 import { fileRoutes, showRoutes, downloadRoutes } from "./routes/index.js";
@@ -15,6 +16,12 @@ app.use(express.static("public"));
 app.use(express.json());
 dotenv.config();
 connectToMongoDB(); // Connect to Database
+
+// CORS
+const corsOptions = {
+  origin: process.env.ALLOWED_CLIENTS.split(",")
+}
+app.use(cors(corsOptions));
 
 // CRON Job to remove files from upload folder and data from database everyday at midnight 
 cron.schedule("0 0 * * *", () => {

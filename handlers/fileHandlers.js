@@ -58,6 +58,7 @@ export const uploadFiles = (req, res) => {
       size: req.file.size,
     });
 
+    // Response -> Link
     return res.status(200).json({
       success: true,
       statusCode: 200,
@@ -65,8 +66,6 @@ export const uploadFiles = (req, res) => {
       message: "All the fields are required",
     });
   });
-
-  // Response -> Link
 };
 
 // @description     Get file info
