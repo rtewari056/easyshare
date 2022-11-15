@@ -141,10 +141,11 @@ export const emailFiles = async (req, res) => {
       });
     }
 
-    file.sender = emailFrom;
-    file.receiver = emailTo;
-
-    const response = await file.save();
+    // Update sender and receiver
+    await File.findByIdAndUpdate(file._id, {
+      sender: emailFrom,
+      receiver: emailTo,
+    });
 
     // Send email
     sendMail({

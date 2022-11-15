@@ -246,6 +246,11 @@ body,
   cursor: pointer;
 }
 
+.send-btn-container button:hover {
+  background: var(--light-blue);
+  color: var(--main-bg-color);
+}
+
 .toast {
   position: absolute;
   bottom: 10px;
